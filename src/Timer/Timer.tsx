@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Timer.css";
 
 const Timer = () => {
    let [min, setMin] = useState(0);
    let [sec, setSec] = useState(0);
    let [msec, setMsec] = useState(0);
-   var interval: any = null;
+   let [interval1, saveInterval]: any = useState();
 
    function SetTimer() {
       setMsec(++msec);
@@ -17,21 +17,22 @@ const Timer = () => {
          setSec((sec = 0));
       }
    }
-   function start() {
-      interval = setInterval(SetTimer, 10);
 
-      console.log(interval);
-   }
-   console.log(interval);
-   function stop() {
-      clearInterval(SetTimer);
-   }
+   const start = () => {
+      let interval = setInterval(SetTimer, 10);
+      saveInterval(interval);
+   };
 
+   function stop(): any {
+      clearInterval(interval1);
+   }
    function reset() {
       setMin(0);
       setSec(0);
       setMsec(0);
+      clearInterval(interval1);
    }
+
    return (
       <div>
          <div className="timer">
@@ -48,3 +49,6 @@ const Timer = () => {
    );
 };
 export default Timer;
+function Timeout(Timeout: any): [any, any] {
+   throw new Error("Function not implemented.");
+}
